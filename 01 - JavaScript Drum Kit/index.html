@@ -58,9 +58,15 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  function getClickKey(e) {
+    if (!e.target.getAttribute('data-key')) return e.target.parentNode.getAttribute('data-key');
+    selectedKey = e.target.getAttribute('data-key');
+  }
+
   function playSound(e) {
-    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
-    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+    const instrumentID = e.type === 'click' ? getClickKey(e) : e.keyCode;
+    const audio = document.querySelector(`audio[data-key="${instrumentID}"]`);
+    const key = document.querySelector(`.key[data-key="${instrumentID}"]`);
     if (!audio) return;
     audio.currentTime = 0; // Rewind to start to allow simultaneous play
     audio.play();
@@ -73,6 +79,7 @@
   }
 
   const keys = document.querySelectorAll('.key');
+  keys.forEach(key => key.addEventListener('click', playSound));
   keys.forEach(key => key.addEventListener('transitionend', removeTransition));
 
   window.addEventListener('keydown', playSound);
