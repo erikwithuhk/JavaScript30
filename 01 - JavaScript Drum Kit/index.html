@@ -60,7 +60,7 @@
 <script>
   function getClickKey(e) {
     if (!e.target.getAttribute('data-key')) return e.target.parentNode.getAttribute('data-key');
-    selectedKey = e.target.getAttribute('data-key');
+    return selectedKey = e.target.getAttribute('data-key');
   }
 
   function playSound(e) {
